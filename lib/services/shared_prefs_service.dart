@@ -1,21 +1,46 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefsService {
-  static late SharedPreferences _prefs;
+  static const String _tokenKey = 'auth_token';
+  static const String _userIdKey = 'user_id';
+  static const String _roleKey = 'user_role';
 
-  static const _kUsername = 'username';
-  static const _kIsChild = 'is_child';
-  static const _kDailyLimit = 'daily_limit_minutes';
-
-  static Future<void> init() async {
-    _prefs = await SharedPreferences.getInstance();
+  static Future<String?> getString(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key);
   }
 
-  static String? get username => _prefs.getString(_kUsername);
-  static bool get isChild => _prefs.getBool(_kIsChild) ?? true;
-  static int get dailyLimit => _prefs.getInt(_kDailyLimit) ?? 60;
+  static Future<void> setString(String key, String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(key, value);
+  }
 
-  static Future<void> setUsername(String username) async => await _prefs.setString(_kUsername, username);
-  static Future<void> setIsChild(bool isChild) async => await _prefs.setBool(_kIsChild, isChild);
-  static Future<void> setDailyLimit(int minutes) async => await _prefs.setInt(_kDailyLimit, minutes);
+  static Future<void> saveAuthToken(String token) async {
+    await setString(_tokenKey, token);
+  }
+
+  static Future<String?> getAuthToken() async {
+    return getString(_tokenKey);
+  }
+
+  static Future<void> saveUserId(String userId) async {
+    await setString(_userIdKey, userId);
+  }
+
+  static Future<String?> getUserId() async {
+    return getString(_userIdKey);
+  }
+
+  static Future<void> saveUserRole(String role) async {
+    await setString(_roleKey, role);
+  }
+
+  static Future<String?> getUserRole() async {
+    return getString(_roleKey);
+  }
+
+  static Future<void> clearAll() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+  }
 }

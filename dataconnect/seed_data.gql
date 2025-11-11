@@ -1,0 +1,126 @@
+mutation CreateDemoData @transaction @auth(level: USER_ANON, insecureReason: "This operation is part of the seed data. it's safe to expose to all logged in users.") {
+  user_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      displayName: "demouser1",
+      email: "demouser1@example.com",
+      createdAt: "2024-03-15T12:00:00Z"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      displayName: "demouser2",
+      email: "demouser2@example.com",
+      createdAt: "2024-03-15T12:00:00Z"
+    }
+  ])
+  child_insertMany(data: [
+    {
+      id: "650e8400-e29b-41d4-a716-446655440000",
+      firstName: "demochild1",
+      lastName: "child",
+      dateOfBirth: "2020-01-01",
+      createdAt: "2024-03-15T12:00:00Z"
+    },
+    {
+      id: "650e8400-e29b-41d4-a716-446655440001",
+      firstName: "demochild2",
+      lastName: "child",
+      dateOfBirth: "2021-02-02",
+      createdAt: "2024-03-15T12:00:00Z"
+    }
+  ])
+  childUser_insertMany(data: [
+    {
+      userId: "550e8400-e29b-41d4-a716-446655440000",
+      childId: "650e8400-e29b-41d4-a716-446655440000",
+    },
+    {
+      userId: "550e8400-e29b-41d4-a716-446655440001",
+      childId: "650e8400-e29b-41d4-a716-446655440001",
+    }
+  ])
+  event_insertMany(data: [
+    {
+      childId: "650e8400-e29b-41d4-a716-446655440000",
+      title: "Demo Event 1",
+      description: "Demo event description 1",
+      location: "Demo location 1",
+      eventDate: "2024-03-20",
+      startTime: "10:00",
+      endTime: "11:00",
+      createdAt: "2024-03-15T12:00:00Z"
+    },
+    {
+      childId: "650e8400-e29b-41d4-a716-446655440001",
+      title: "Demo Event 2",
+      description: "Demo event description 2",
+      location: "Demo location 2",
+      eventDate: "2024-03-21",
+      startTime: "14:00",
+      endTime: "15:00",
+      createdAt: "2024-03-15T12:00:00Z"
+    }
+  ])
+  medication_insertMany(data: [
+    {
+      childId: "650e8400-e29b-41d4-a716-446655440000",
+      name: "Demo Medication 1",
+      dosage: "10mg",
+      frequency: "Daily",
+      startDate: "2024-03-16",
+      createdAt: "2024-03-15T12:00:00Z"
+    },
+    {
+      childId: "650e8400-e29b-41d4-a716-446655440001",
+      name: "Demo Medication 2",
+      dosage: "20mg",
+      frequency: "Twice daily",
+      startDate: "2024-03-17",
+      createdAt: "2024-03-15T12:00:00Z"
+    }
+  ])
+  milestone_insertMany(data: [
+    {
+      childId: "650e8400-e29b-41d4-a716-446655440000",
+      description: "Demo Milestone 1",
+      milestoneDate: "2024-03-18",
+      createdAt: "2024-03-15T12:00:00Z"
+    },
+    {
+      childId: "650e8400-e29b-41d4-a716-446655440001",
+      description: "Demo Milestone 2",
+      milestoneDate: "2024-03-19",
+      createdAt: "2024-03-15T12:00:00Z"
+    }
+  ])
+  sharedList_insertMany(data: [
+    {
+      childId: "650e8400-e29b-41d4-a716-446655440000",
+      creatorId: "550e8400-e29b-41d4-a716-446655440000",
+      name: "Demo SharedList 1",
+      description: "Demo SharedList description 1",
+      isPublic: true,
+      createdAt: "2024-03-15T12:00:00Z"
+    },
+    {
+      childId: "650e8400-e29b-41d4-a716-446655440001",
+      creatorId: "550e8400-e29b-41d4-a716-446655440001",
+      name: "Demo SharedList 2",
+      description: "Demo SharedList description 2",
+      isPublic: false,
+      createdAt: "2024-03-15T12:00:00Z"
+    }
+  ])
+  sharedListItem_insertMany(data: [
+    {
+      sharedListId: "750e8400-e29b-41d4-a716-446655440000",
+      description: "Demo SharedListItem description 1",
+      createdAt: "2024-03-15T12:00:00Z"
+    },
+    {
+      sharedListId: "750e8400-e29b-41d4-a716-446655440001",
+      description: "Demo SharedListItem description 2",
+      createdAt: "2024-03-15T12:00:00Z"
+    }
+  ])
+}

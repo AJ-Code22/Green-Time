@@ -1,0 +1,1001 @@
+extend type Child {
+  """
+  ✨ List `ChildUser` objects in a one-to-many relationship (where `ChildUser`.`child` is this object).
+  """
+  childUsers_on_child(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: ChildUser_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [ChildUser_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: ChildUser_Having
+  ): [ChildUser!]! @fdc_generated(from: "ChildUser.child", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `Event` objects in a one-to-many relationship (where `Event`.`child` is this object).
+  """
+  events_on_child(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Event_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Event_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Event_Having
+  ): [Event!]! @fdc_generated(from: "Event.child", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `Medication` objects in a one-to-many relationship (where `Medication`.`child` is this object).
+  """
+  medications_on_child(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Medication_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Medication_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Medication_Having
+  ): [Medication!]! @fdc_generated(from: "Medication.child", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `Milestone` objects in a one-to-many relationship (where `Milestone`.`child` is this object).
+  """
+  milestones_on_child(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Milestone_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Milestone_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Milestone_Having
+  ): [Milestone!]! @fdc_generated(from: "Milestone.child", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `SharedList` objects in a one-to-many relationship (where `SharedList`.`child` is this object).
+  """
+  sharedLists_on_child(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: SharedList_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [SharedList_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: SharedList_Having
+  ): [SharedList!]! @fdc_generated(from: "SharedList.child", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `User` objects using `ChildUser` as the join table (a `ChildUser` object exists where its `child` is this and its `user` is that).
+  """
+  users_via_ChildUser(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: ChildUser_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [ChildUser_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: ChildUser_Having
+  ): [User!]! @fdc_generated(from: "ChildUser", purpose: QUERY_MULTIPLE_MANY_TO_MANY)
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "Child", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `Child` table.
+  """
+  _count: Int! @fdc_generated(from: "Child.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Child` table where the `allergies` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  allergies_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Child.allergies", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Child` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Child.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Child` table where the `dateOfBirth` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  dateOfBirth_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Child.dateOfBirth", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Child` table where the `firstName` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  firstName_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Child.firstName", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Child` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Child.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Child` table where the `lastName` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  lastName_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Child.lastName", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Child` table where the `medicalNotes` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  medicalNotes_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Child.medicalNotes", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Child` table where the `notes` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  notes_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Child.notes", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `Child` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "Child.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `dateOfBirth` field in the `Child` table.
+  """
+  dateOfBirth_min: Date @fdc_generated(from: "Child.dateOfBirth", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `Child` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "Child.createdAt", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `dateOfBirth` field in the `Child` table.
+  """
+  dateOfBirth_max: Date @fdc_generated(from: "Child.dateOfBirth", purpose: QUERY_MAX)
+}
+extend type ChildUser {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "ChildUser", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `ChildUser` table.
+  """
+  _count: Int! @fdc_generated(from: "ChildUser.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `ChildUser` table where the `childId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  childId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "ChildUser.childId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `ChildUser` table where the `userId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  userId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "ChildUser.userId", purpose: QUERY_COUNT)
+}
+extend type Event {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "Event", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `Event` table.
+  """
+  _count: Int! @fdc_generated(from: "Event.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Event` table where the `childId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  childId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Event.childId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Event` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Event.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Event` table where the `description` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  description_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Event.description", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Event` table where the `endTime` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  endTime_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Event.endTime", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Event` table where the `eventDate` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  eventDate_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Event.eventDate", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Event` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Event.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Event` table where the `location` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  location_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Event.location", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Event` table where the `startTime` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  startTime_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Event.startTime", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Event` table where the `title` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  title_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Event.title", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `Event` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "Event.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `eventDate` field in the `Event` table.
+  """
+  eventDate_min: Date @fdc_generated(from: "Event.eventDate", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `Event` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "Event.createdAt", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `eventDate` field in the `Event` table.
+  """
+  eventDate_max: Date @fdc_generated(from: "Event.eventDate", purpose: QUERY_MAX)
+}
+extend type Medication {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "Medication", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `Medication` table.
+  """
+  _count: Int! @fdc_generated(from: "Medication.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medication` table where the `childId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  childId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medication.childId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medication` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medication.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medication` table where the `dosage` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  dosage_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medication.dosage", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medication` table where the `endDate` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  endDate_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medication.endDate", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medication` table where the `frequency` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  frequency_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medication.frequency", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medication` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medication.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medication` table where the `instructions` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  instructions_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medication.instructions", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medication` table where the `name` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  name_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medication.name", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Medication` table where the `startDate` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  startDate_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Medication.startDate", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `Medication` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "Medication.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `endDate` field in the `Medication` table.
+  """
+  endDate_min: Date @fdc_generated(from: "Medication.endDate", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `startDate` field in the `Medication` table.
+  """
+  startDate_min: Date @fdc_generated(from: "Medication.startDate", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `Medication` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "Medication.createdAt", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `endDate` field in the `Medication` table.
+  """
+  endDate_max: Date @fdc_generated(from: "Medication.endDate", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `startDate` field in the `Medication` table.
+  """
+  startDate_max: Date @fdc_generated(from: "Medication.startDate", purpose: QUERY_MAX)
+}
+extend type Milestone {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "Milestone", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `Milestone` table.
+  """
+  _count: Int! @fdc_generated(from: "Milestone.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Milestone` table where the `category` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  category_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Milestone.category", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Milestone` table where the `childId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  childId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Milestone.childId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Milestone` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Milestone.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Milestone` table where the `description` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  description_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Milestone.description", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Milestone` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Milestone.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Milestone` table where the `milestoneDate` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  milestoneDate_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Milestone.milestoneDate", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `Milestone` table where the `notes` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  notes_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "Milestone.notes", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `Milestone` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "Milestone.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `milestoneDate` field in the `Milestone` table.
+  """
+  milestoneDate_min: Date @fdc_generated(from: "Milestone.milestoneDate", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `Milestone` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "Milestone.createdAt", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `milestoneDate` field in the `Milestone` table.
+  """
+  milestoneDate_max: Date @fdc_generated(from: "Milestone.milestoneDate", purpose: QUERY_MAX)
+}
+extend type SharedList {
+  """
+  ✨ List `SharedListItem` objects in a one-to-many relationship (where `SharedListItem`.`sharedList` is this object).
+  """
+  sharedListItems_on_sharedList(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: SharedListItem_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [SharedListItem_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: SharedListItem_Having
+  ): [SharedListItem!]! @fdc_generated(from: "SharedListItem.sharedList", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "SharedList", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `SharedList` table.
+  """
+  _count: Int! @fdc_generated(from: "SharedList.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `SharedList` table where the `childId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  childId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "SharedList.childId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `SharedList` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "SharedList.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `SharedList` table where the `creatorId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  creatorId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "SharedList.creatorId", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `SharedList` table where the `description` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  description_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "SharedList.description", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `SharedList` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "SharedList.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `SharedList` table where the `isPublic` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  isPublic_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "SharedList.isPublic", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `SharedList` table where the `name` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  name_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "SharedList.name", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `SharedList` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "SharedList.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `SharedList` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "SharedList.createdAt", purpose: QUERY_MAX)
+}
+extend type SharedListItem {
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "SharedListItem", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `SharedListItem` table.
+  """
+  _count: Int! @fdc_generated(from: "SharedListItem.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `SharedListItem` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "SharedListItem.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `SharedListItem` table where the `description` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  description_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "SharedListItem.description", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `SharedListItem` table where the `dueDate` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  dueDate_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "SharedListItem.dueDate", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `SharedListItem` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "SharedListItem.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `SharedListItem` table where the `isCompleted` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  isCompleted_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "SharedListItem.isCompleted", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `SharedListItem` table where the `sharedListId` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  sharedListId_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "SharedListItem.sharedListId", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `SharedListItem` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "SharedListItem.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Minimum of the `dueDate` field in the `SharedListItem` table.
+  """
+  dueDate_min: Date @fdc_generated(from: "SharedListItem.dueDate", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `SharedListItem` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "SharedListItem.createdAt", purpose: QUERY_MAX)
+  """
+  ✨ Maximum of the `dueDate` field in the `SharedListItem` table.
+  """
+  dueDate_max: Date @fdc_generated(from: "SharedListItem.dueDate", purpose: QUERY_MAX)
+}
+extend type User {
+  """
+  ✨ List `ChildUser` objects in a one-to-many relationship (where `ChildUser`.`user` is this object).
+  """
+  childUsers_on_user(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: ChildUser_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [ChildUser_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: ChildUser_Having
+  ): [ChildUser!]! @fdc_generated(from: "ChildUser.user", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `SharedList` objects in a one-to-many relationship (where `SharedList`.`creator` is this object).
+  """
+  sharedLists_on_creator(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: SharedList_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [SharedList_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: SharedList_Having
+  ): [SharedList!]! @fdc_generated(from: "SharedList.creator", purpose: QUERY_MULTIPLE_ONE_TO_MANY)
+  """
+  ✨ List `Child` objects using `ChildUser` as the join table (a `ChildUser` object exists where its `user` is this and its `child` is that).
+  """
+  children_via_ChildUser(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: ChildUser_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [ChildUser_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: ChildUser_Having
+  ): [Child!]! @fdc_generated(from: "ChildUser", purpose: QUERY_MULTIPLE_MANY_TO_MANY)
+  """
+  Implicit metadata field that cannot be written. It provides extra information about query results.
+  """
+  _metadata: _Metadata @fdc_generated(from: "User", purpose: METADATA_FIELD)
+  """
+  ✨ Count the number of rows in the `User` table.
+  """
+  _count: Int! @fdc_generated(from: "User.", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `User` table where the `createdAt` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  createdAt_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "User.createdAt", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `User` table where the `displayName` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  displayName_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "User.displayName", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `User` table where the `email` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  email_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "User.email", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `User` table where the `id` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  id_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "User.id", purpose: QUERY_COUNT)
+  """
+  ✨ Count the number of rows in the `User` table where the `photoUrl` field is non-null. Pass the `distinct` argument to instead count the number of distinct values.
+  """
+  photoUrl_count(
+    """
+    Set to true to count the number of distinct values.
+    """
+    distinct: Boolean = false
+  ): Int! @fdc_generated(from: "User.photoUrl", purpose: QUERY_COUNT)
+  """
+  ✨ Minimum of the `createdAt` field in the `User` table.
+  """
+  createdAt_min: Timestamp @fdc_generated(from: "User.createdAt", purpose: QUERY_MIN)
+  """
+  ✨ Maximum of the `createdAt` field in the `User` table.
+  """
+  createdAt_max: Timestamp @fdc_generated(from: "User.createdAt", purpose: QUERY_MAX)
+}

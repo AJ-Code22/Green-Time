@@ -1,0 +1,21 @@
+mutation CreateNewSharedList($childId: UUID, $creatorId: UUID, $name: String!, $description: String, $isPublic: Boolean) @auth(level: USER) {
+  sharedList_insert(data: {childId: $childId, creatorId: $creatorId, name: $name, description: $description, isPublic: $isPublic})
+}
+
+query GetSharedListsForChild($childId: UUID!) @auth(level: USER) {
+  sharedLists(where: {childId: {eq: $childId}}) {
+    id
+    name
+    description
+    isPublic
+    createdAt
+  }
+}
+
+mutation UpdateSharedListItemIsCompleted($id: UUID!, $isCompleted: Boolean!) @auth(level: USER) {
+  sharedListItem_update(key: {id: $id}, data: {isCompleted: $isCompleted})
+}
+
+mutation DeleteMedication($id: UUID!) @auth(level: USER) {
+  medication_delete(key: {id: $id})
+}

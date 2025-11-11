@@ -1,0 +1,421 @@
+extend type Query {
+  """
+  ✨ Look up a single `Child` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  child(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Child_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Child_FirstRow
+  ): Child @fdc_generated(from: "Child", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `ChildUser` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  childUser(
+    """
+    The key used to identify the object.
+    """
+    key: ChildUser_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: ChildUser_FirstRow
+  ): ChildUser @fdc_generated(from: "ChildUser", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `Event` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  event(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Event_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Event_FirstRow
+  ): Event @fdc_generated(from: "Event", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `Medication` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  medication(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Medication_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Medication_FirstRow
+  ): Medication @fdc_generated(from: "Medication", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `Milestone` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  milestone(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Milestone_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Milestone_FirstRow
+  ): Milestone @fdc_generated(from: "Milestone", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `SharedList` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  sharedList(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: SharedList_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: SharedList_FirstRow
+  ): SharedList @fdc_generated(from: "SharedList", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `SharedListItem` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  sharedListItem(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: SharedListItem_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: SharedListItem_FirstRow
+  ): SharedListItem @fdc_generated(from: "SharedListItem", purpose: QUERY_SINGLE)
+  """
+  ✨ Look up a single `User` based on `id`, `key` or `first` and return selected fields (or `null` if not found).
+  """
+  user(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: User_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: User_FirstRow
+  ): User @fdc_generated(from: "User", purpose: QUERY_SINGLE)
+  """
+  ✨ List `Child` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  children(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Child_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Child_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Child_Having
+  ): [Child!]! @fdc_generated(from: "Child", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `ChildUser` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  childUsers(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: ChildUser_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [ChildUser_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: ChildUser_Having
+  ): [ChildUser!]! @fdc_generated(from: "ChildUser", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `Event` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  events(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Event_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Event_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Event_Having
+  ): [Event!]! @fdc_generated(from: "Event", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `Medication` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  medications(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Medication_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Medication_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Medication_Having
+  ): [Medication!]! @fdc_generated(from: "Medication", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `Milestone` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  milestones(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: Milestone_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [Milestone_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: Milestone_Having
+  ): [Milestone!]! @fdc_generated(from: "Milestone", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `SharedList` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  sharedLists(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: SharedList_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [SharedList_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: SharedList_Having
+  ): [SharedList!]! @fdc_generated(from: "SharedList", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `SharedListItem` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  sharedListItems(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: SharedListItem_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [SharedListItem_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: SharedListItem_Having
+  ): [SharedListItem!]! @fdc_generated(from: "SharedListItem", purpose: QUERY_MULTIPLE)
+  """
+  ✨ List `User` objects in the table and return selected fields, optionally filtered by `where` conditions
+  """
+  users(
+    """
+    Filter condition to narrow down the query results.
+    """
+    where: User_Filter
+
+    """
+    Order the query results by specific fields.
+    """
+    orderBy: [User_Order!]
+
+    """
+    Number of rows to skip before starting to return the results.
+    """
+    offset: Int
+
+    """
+    Maximum number of rows to return (defaults to 100 rows).
+    """
+    limit: Int = 100
+
+    """
+    Set to true to return distinct results.
+    """
+    distinct: Boolean = false
+
+    """
+    Filter condition to apply to the groups of aggregate queries.
+    """
+    having: User_Having
+  ): [User!]! @fdc_generated(from: "User", purpose: QUERY_MULTIPLE)
+}

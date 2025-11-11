@@ -1,0 +1,76 @@
+extend type Child {
+  """
+  ✨ Implicit primary key field. It's a UUID column default to a generated new value. See `@table` for how to customize it.
+  """
+  id: UUID! @default(expr: "uuidV4()") @fdc_generated(from: "Child", purpose: IMPLICIT_KEY_FIELD)
+}
+extend type ChildUser {
+  """
+  ✨ Implicit foreign key field based on `ChildUser`.`child`. It must match the value of `Child`.`id`. See `@ref` for how to customize it.
+  """
+  childId: UUID! @fdc_generated(from: "ChildUser.child", purpose: IMPLICIT_REF_FIELD)
+  """
+  ✨ Implicit foreign key field based on `ChildUser`.`user`. It must match the value of `User`.`id`. See `@ref` for how to customize it.
+  """
+  userId: UUID! @fdc_generated(from: "ChildUser.user", purpose: IMPLICIT_REF_FIELD)
+}
+extend type Event {
+  """
+  ✨ Implicit primary key field. It's a UUID column default to a generated new value. See `@table` for how to customize it.
+  """
+  id: UUID! @default(expr: "uuidV4()") @fdc_generated(from: "Event", purpose: IMPLICIT_KEY_FIELD)
+  """
+  ✨ Implicit foreign key field based on `Event`.`child`. It must match the value of `Child`.`id`. See `@ref` for how to customize it.
+  """
+  childId: UUID @fdc_generated(from: "Event.child", purpose: IMPLICIT_REF_FIELD)
+}
+extend type Medication {
+  """
+  ✨ Implicit primary key field. It's a UUID column default to a generated new value. See `@table` for how to customize it.
+  """
+  id: UUID! @default(expr: "uuidV4()") @fdc_generated(from: "Medication", purpose: IMPLICIT_KEY_FIELD)
+  """
+  ✨ Implicit foreign key field based on `Medication`.`child`. It must match the value of `Child`.`id`. See `@ref` for how to customize it.
+  """
+  childId: UUID @fdc_generated(from: "Medication.child", purpose: IMPLICIT_REF_FIELD)
+}
+extend type Milestone {
+  """
+  ✨ Implicit primary key field. It's a UUID column default to a generated new value. See `@table` for how to customize it.
+  """
+  id: UUID! @default(expr: "uuidV4()") @fdc_generated(from: "Milestone", purpose: IMPLICIT_KEY_FIELD)
+  """
+  ✨ Implicit foreign key field based on `Milestone`.`child`. It must match the value of `Child`.`id`. See `@ref` for how to customize it.
+  """
+  childId: UUID @fdc_generated(from: "Milestone.child", purpose: IMPLICIT_REF_FIELD)
+}
+extend type SharedList {
+  """
+  ✨ Implicit primary key field. It's a UUID column default to a generated new value. See `@table` for how to customize it.
+  """
+  id: UUID! @default(expr: "uuidV4()") @fdc_generated(from: "SharedList", purpose: IMPLICIT_KEY_FIELD)
+  """
+  ✨ Implicit foreign key field based on `SharedList`.`child`. It must match the value of `Child`.`id`. See `@ref` for how to customize it.
+  """
+  childId: UUID @fdc_generated(from: "SharedList.child", purpose: IMPLICIT_REF_FIELD)
+  """
+  ✨ Implicit foreign key field based on `SharedList`.`creator`. It must match the value of `User`.`id`. See `@ref` for how to customize it.
+  """
+  creatorId: UUID @fdc_generated(from: "SharedList.creator", purpose: IMPLICIT_REF_FIELD)
+}
+extend type SharedListItem {
+  """
+  ✨ Implicit primary key field. It's a UUID column default to a generated new value. See `@table` for how to customize it.
+  """
+  id: UUID! @default(expr: "uuidV4()") @fdc_generated(from: "SharedListItem", purpose: IMPLICIT_KEY_FIELD)
+  """
+  ✨ Implicit foreign key field based on `SharedListItem`.`sharedList`. It must match the value of `SharedList`.`id`. See `@ref` for how to customize it.
+  """
+  sharedListId: UUID @fdc_generated(from: "SharedListItem.sharedList", purpose: IMPLICIT_REF_FIELD)
+}
+extend type User {
+  """
+  ✨ Implicit primary key field. It's a UUID column default to a generated new value. See `@table` for how to customize it.
+  """
+  id: UUID! @default(expr: "uuidV4()") @fdc_generated(from: "User", purpose: IMPLICIT_KEY_FIELD)
+}

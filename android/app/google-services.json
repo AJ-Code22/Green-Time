@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "279703611443",
+    "project_id": "green-time-app",
+    "storage_bucket": "green-time-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279703611443:android:ffd4f00469011991919b46",
+        "android_client_info": {
+          "package_name": "com.example.hi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1mXZj3uHgpDJhc8oXMjcCUnQEXpNmkIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

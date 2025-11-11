@@ -1,0 +1,69 @@
+type User @table {
+  displayName: String!
+  email: String!
+  createdAt: Timestamp!
+  photoUrl: String
+}
+
+type Child @table {
+  firstName: String!
+  lastName: String!
+  dateOfBirth: Date!
+  createdAt: Timestamp!
+  medicalNotes: String
+  allergies: String
+  notes: String
+}
+
+type ChildUser @table(key: ["child", "user"]) {
+  child: Child!
+  user: User!
+}
+
+type Event @table {
+  title: String!
+  eventDate: Date!
+  createdAt: Timestamp!
+  description: String
+  location: String
+  startTime: String
+  endTime: String
+  child: Child
+}
+
+type Medication @table {
+  name: String!
+  dosage: String!
+  frequency: String!
+  startDate: Date!
+  createdAt: Timestamp!
+  instructions: String
+  endDate: Date
+  child: Child
+}
+
+type Milestone @table {
+  description: String!
+  milestoneDate: Date!
+  createdAt: Timestamp!
+  notes: String
+  category: String
+  child: Child
+}
+
+type SharedList @table {
+  name: String!
+  createdAt: Timestamp!
+  description: String
+  isPublic: Boolean
+  creator: User
+  child: Child
+}
+
+type SharedListItem @table {
+  description: String!
+  createdAt: Timestamp!
+  isCompleted: Boolean
+  dueDate: Date
+  sharedList: SharedList
+}

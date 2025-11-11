@@ -1,0 +1,888 @@
+extend type Mutation {
+  """
+  ✨ Insert a single `Child` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  child_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Child_Data!
+  ): Child_KeyOutput! @fdc_generated(from: "Child", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `ChildUser` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  childUser_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: ChildUser_Data!
+  ): ChildUser_KeyOutput! @fdc_generated(from: "ChildUser", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `Event` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  event_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Event_Data!
+  ): Event_KeyOutput! @fdc_generated(from: "Event", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `Medication` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  medication_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Medication_Data!
+  ): Medication_KeyOutput! @fdc_generated(from: "Medication", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `Milestone` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  milestone_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Milestone_Data!
+  ): Milestone_KeyOutput! @fdc_generated(from: "Milestone", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `SharedList` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  sharedList_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: SharedList_Data!
+  ): SharedList_KeyOutput! @fdc_generated(from: "SharedList", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `SharedListItem` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  sharedListItem_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: SharedListItem_Data!
+  ): SharedListItem_KeyOutput! @fdc_generated(from: "SharedListItem", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `User` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  user_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: User_Data!
+  ): User_KeyOutput! @fdc_generated(from: "User", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert `Child` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  child_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Child_Data!]!
+  ): [Child_KeyOutput!]! @fdc_generated(from: "Child", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `ChildUser` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  childUser_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [ChildUser_Data!]!
+  ): [ChildUser_KeyOutput!]! @fdc_generated(from: "ChildUser", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `Event` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  event_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Event_Data!]!
+  ): [Event_KeyOutput!]! @fdc_generated(from: "Event", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `Medication` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  medication_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Medication_Data!]!
+  ): [Medication_KeyOutput!]! @fdc_generated(from: "Medication", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `Milestone` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  milestone_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Milestone_Data!]!
+  ): [Milestone_KeyOutput!]! @fdc_generated(from: "Milestone", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `SharedList` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  sharedList_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [SharedList_Data!]!
+  ): [SharedList_KeyOutput!]! @fdc_generated(from: "SharedList", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `SharedListItem` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  sharedListItem_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [SharedListItem_Data!]!
+  ): [SharedListItem_KeyOutput!]! @fdc_generated(from: "SharedListItem", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `User` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  user_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [User_Data!]!
+  ): [User_KeyOutput!]! @fdc_generated(from: "User", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert or update a single `Child` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Child`.
+  """
+  child_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Child_Data!
+  ): Child_KeyOutput! @fdc_generated(from: "Child", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `ChildUser` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `ChildUser`.
+  """
+  childUser_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: ChildUser_Data!
+  ): ChildUser_KeyOutput! @fdc_generated(from: "ChildUser", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `Event` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Event`.
+  """
+  event_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Event_Data!
+  ): Event_KeyOutput! @fdc_generated(from: "Event", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `Medication` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Medication`.
+  """
+  medication_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Medication_Data!
+  ): Medication_KeyOutput! @fdc_generated(from: "Medication", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `Milestone` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Milestone`.
+  """
+  milestone_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Milestone_Data!
+  ): Milestone_KeyOutput! @fdc_generated(from: "Milestone", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `SharedList` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `SharedList`.
+  """
+  sharedList_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: SharedList_Data!
+  ): SharedList_KeyOutput! @fdc_generated(from: "SharedList", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `SharedListItem` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `SharedListItem`.
+  """
+  sharedListItem_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: SharedListItem_Data!
+  ): SharedListItem_KeyOutput! @fdc_generated(from: "SharedListItem", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `User` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `User`.
+  """
+  user_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: User_Data!
+  ): User_KeyOutput! @fdc_generated(from: "User", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update `Child` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Child`.
+  """
+  child_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Child_Data!]!
+  ): [Child_KeyOutput!]! @fdc_generated(from: "Child", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `ChildUser` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `ChildUser`.
+  """
+  childUser_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [ChildUser_Data!]!
+  ): [ChildUser_KeyOutput!]! @fdc_generated(from: "ChildUser", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `Event` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Event`.
+  """
+  event_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Event_Data!]!
+  ): [Event_KeyOutput!]! @fdc_generated(from: "Event", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `Medication` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Medication`.
+  """
+  medication_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Medication_Data!]!
+  ): [Medication_KeyOutput!]! @fdc_generated(from: "Medication", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `Milestone` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Milestone`.
+  """
+  milestone_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Milestone_Data!]!
+  ): [Milestone_KeyOutput!]! @fdc_generated(from: "Milestone", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `SharedList` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `SharedList`.
+  """
+  sharedList_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [SharedList_Data!]!
+  ): [SharedList_KeyOutput!]! @fdc_generated(from: "SharedList", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `SharedListItem` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `SharedListItem`.
+  """
+  sharedListItem_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [SharedListItem_Data!]!
+  ): [SharedListItem_KeyOutput!]! @fdc_generated(from: "SharedListItem", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `User` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `User`.
+  """
+  user_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [User_Data!]!
+  ): [User_KeyOutput!]! @fdc_generated(from: "User", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Update a single `Child` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Child` or `null` if not found.
+  """
+  child_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Child_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Child_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Child_Data!
+  ): Child_KeyOutput @fdc_generated(from: "Child", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `ChildUser` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `ChildUser` or `null` if not found.
+  """
+  childUser_update(
+    """
+    The key used to identify the object.
+    """
+    key: ChildUser_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: ChildUser_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: ChildUser_Data!
+  ): ChildUser_KeyOutput @fdc_generated(from: "ChildUser", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Event` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Event` or `null` if not found.
+  """
+  event_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Event_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Event_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Event_Data!
+  ): Event_KeyOutput @fdc_generated(from: "Event", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Medication` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Medication` or `null` if not found.
+  """
+  medication_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Medication_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Medication_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Medication_Data!
+  ): Medication_KeyOutput @fdc_generated(from: "Medication", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Milestone` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Milestone` or `null` if not found.
+  """
+  milestone_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Milestone_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Milestone_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Milestone_Data!
+  ): Milestone_KeyOutput @fdc_generated(from: "Milestone", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `SharedList` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `SharedList` or `null` if not found.
+  """
+  sharedList_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: SharedList_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: SharedList_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: SharedList_Data!
+  ): SharedList_KeyOutput @fdc_generated(from: "SharedList", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `SharedListItem` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `SharedListItem` or `null` if not found.
+  """
+  sharedListItem_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: SharedListItem_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: SharedListItem_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: SharedListItem_Data!
+  ): SharedListItem_KeyOutput @fdc_generated(from: "SharedListItem", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `User` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `User` or `null` if not found.
+  """
+  user_update(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: User_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: User_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: User_Data!
+  ): User_KeyOutput @fdc_generated(from: "User", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update `Child` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  child_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Child_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Child_Data!
+  ): Int! @fdc_generated(from: "Child", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `ChildUser` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  childUser_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: ChildUser_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: ChildUser_Data!
+  ): Int! @fdc_generated(from: "ChildUser", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `Event` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  event_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Event_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Event_Data!
+  ): Int! @fdc_generated(from: "Event", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `Medication` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  medication_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Medication_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Medication_Data!
+  ): Int! @fdc_generated(from: "Medication", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `Milestone` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  milestone_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Milestone_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Milestone_Data!
+  ): Int! @fdc_generated(from: "Milestone", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `SharedList` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  sharedList_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: SharedList_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: SharedList_Data!
+  ): Int! @fdc_generated(from: "SharedList", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `SharedListItem` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  sharedListItem_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: SharedListItem_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: SharedListItem_Data!
+  ): Int! @fdc_generated(from: "SharedListItem", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `User` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  user_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: User_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: User_Data!
+  ): Int! @fdc_generated(from: "User", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Delete a single `Child` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  child_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Child_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Child_FirstRow
+  ): Child_KeyOutput @fdc_generated(from: "Child", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `ChildUser` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  childUser_delete(
+    """
+    The key used to identify the object.
+    """
+    key: ChildUser_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: ChildUser_FirstRow
+  ): ChildUser_KeyOutput @fdc_generated(from: "ChildUser", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Event` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  event_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Event_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Event_FirstRow
+  ): Event_KeyOutput @fdc_generated(from: "Event", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Medication` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  medication_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Medication_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Medication_FirstRow
+  ): Medication_KeyOutput @fdc_generated(from: "Medication", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Milestone` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  milestone_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: Milestone_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Milestone_FirstRow
+  ): Milestone_KeyOutput @fdc_generated(from: "Milestone", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `SharedList` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  sharedList_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: SharedList_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: SharedList_FirstRow
+  ): SharedList_KeyOutput @fdc_generated(from: "SharedList", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `SharedListItem` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  sharedListItem_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: SharedListItem_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: SharedListItem_FirstRow
+  ): SharedListItem_KeyOutput @fdc_generated(from: "SharedListItem", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `User` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  user_delete(
+    """
+    The unique ID of the object.
+    """
+    id: UUID
+
+    """
+    The key used to identify the object.
+    """
+    key: User_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: User_FirstRow
+  ): User_KeyOutput @fdc_generated(from: "User", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete `Child` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  child_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Child_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Child", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `ChildUser` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  childUser_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: ChildUser_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "ChildUser", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `Event` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  event_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Event_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Event", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `Medication` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  medication_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Medication_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Medication", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `Milestone` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  milestone_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Milestone_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Milestone", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `SharedList` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  sharedList_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: SharedList_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "SharedList", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `SharedListItem` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  sharedListItem_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: SharedListItem_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "SharedListItem", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `User` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  user_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: User_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "User", purpose: DELETE_MULTIPLE)
+}
