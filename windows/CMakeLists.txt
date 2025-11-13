@@ -2,6 +2,13 @@
 cmake_minimum_required(VERSION 3.14)
 project(hi LANGUAGES CXX)
 
+# Firebase Windows Configuration
+# Skip Firebase C++ SDK for Windows (use Dart-only implementation)
+set(FIREBASE_SKIP_WINDOWS TRUE)
+set(FIREBASE_CORE_SKIP_WINDOWS TRUE)
+set(FIRESTORE_SKIP_WINDOWS TRUE)
+set(FIREBASE_STORAGE_SKIP_WINDOWS TRUE)
+
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
 set(BINARY_NAME "hi")

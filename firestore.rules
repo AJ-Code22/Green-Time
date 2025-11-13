@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can read their own profile, their parent's profile, or their child's profile.
+    // They can only create, update, or delete their own profile.
+    match /users/{userId} {
+      allow create: if request.auth.uid != null;
+      allow read: if request.auth.uid == userId ||
+                   (exists(/databases/$(database)/documents/users/$(userId)) &&
+                    get(/databases/$(database)/documents/users/$(userId)).data.parentID == request.auth.uid) ||
+                   (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+                    get(/databases/$(database)/documents/users/$(request.auth.uid)).data.parentID == userId);
+      allow update, delete: if request.auth.uid == userId;
+    }
+
+    // Tasks can only be accessed by the parent or the child it is assigned to
+    match /tasks/{taskId} {
+      allow read, write: if request.auth.uid == resource.data.parentID || request.auth.uid == resource.data.kidID;
+    }
+  }
+}

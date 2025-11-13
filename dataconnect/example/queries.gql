@@ -1,5 +1,5 @@
-mutation CreateNewSharedList($childId: UUID, $creatorId: UUID, $name: String!, $description: String, $isPublic: Boolean) @auth(level: USER) {
-  sharedList_insert(data: {childId: $childId, creatorId: $creatorId, name: $name, description: $description, isPublic: $isPublic})
+mutation CreateNewSharedList($childId: UUID, $creatorId: UUID, $name: String!, $description: String, $isPublic: Boolean, $createdAt: Timestamp!) @auth(level: USER) {
+  sharedList_insert(data: {childId: $childId, creatorId: $creatorId, name: $name, description: $description, isPublic: $isPublic, createdAt: $createdAt})
 }
 
 query GetSharedListsForChild($childId: UUID!) @auth(level: USER) {

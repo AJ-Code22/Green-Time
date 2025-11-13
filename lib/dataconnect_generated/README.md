@@ -1,4 +1,4 @@
-# dataconnect_generated SDK
+# dataconnect_generated/generated.dart SDK
 
 ## Installation
 ```sh
@@ -75,8 +75,10 @@ ref.subscribe(...);
 #### Required Arguments
 ```dart
 String name = ...;
+Timestamp createdAt = ...;
 ExampleConnector.instance.createNewSharedList(
   name: name,
+  createdAt: createdAt,
 ).execute();
 ```
 
@@ -108,6 +110,7 @@ class CreateNewSharedListVariablesBuilder {
 }
 ExampleConnector.instance.createNewSharedList(
   name: name,
+  createdAt: createdAt,
 )
 .childId(childId)
 .creatorId(creatorId)
@@ -129,6 +132,7 @@ class OperationResult<Data, Variables> {
 
 final result = await ExampleConnector.instance.createNewSharedList(
   name: name,
+  createdAt: createdAt,
 );
 CreateNewSharedListData data = result.data;
 final ref = result.ref;
@@ -139,9 +143,11 @@ Each builder returns an `execute` function, which is a helper function that crea
 An example of how to use the `Ref` object is shown below:
 ```dart
 String name = ...;
+Timestamp createdAt = ...;
 
 final ref = ExampleConnector.instance.createNewSharedList(
   name: name,
+  createdAt: createdAt,
 ).ref();
 ref.execute();
 ```

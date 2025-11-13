@@ -1,4 +1,4 @@
-part of 'generated.dart';
+part of 'example.dart';
 
 class GetSharedListsForChildVariablesBuilder {
   String childId;

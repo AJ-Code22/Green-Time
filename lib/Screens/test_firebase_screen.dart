@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'services/firebase_service.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'services/firebase_service.dart';
 
 class TestFirebaseScreen extends StatelessWidget {
   const TestFirebaseScreen({Key? key}) : super(key: key);
@@ -16,12 +16,9 @@ class TestFirebaseScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 try {
-                  final result = await FirebaseService.signUpWithEmail(
-                    'test@example.com',
-                    'password123'
-                  );
+                  // Firebase disabled for Windows
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Success: ${result.user?.uid}'))
+                    const SnackBar(content: Text('Firebase not available on this platform'))
                   );
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(

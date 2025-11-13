@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Models/task.dart';
 import '../Models/app_state.dart';
+import '../services/tinydb_service.dart';
+import '../services/auth_service.dart';
+import 'add_child_screen.dart';
 
 class ParentDashboard extends StatefulWidget {
   const ParentDashboard({Key? key}) : super(key: key);
@@ -16,43 +19,61 @@ class ParentDashboard extends StatefulWidget {
 }
 
 class _ParentDashboardState extends State<ParentDashboard> with SingleTickerProviderStateMixin {
-  final _firestore = FirebaseFirestore.instance;
   late TabController _tabController;
   // Using a mock parent user ID for testing
   final String mockParentUserId = 'test_parent_123';
+  
+  // Mock data for testing
+  List<Task> mockTasks = [
+    Task(
+      id: '1',
+      title: 'Plant a Tree',
+      description: 'Plant one tree in your area',
+      points: 50,
+      createdAt: DateTime.now(),
+    ),
+    Task(
+      id: '2',
+      title: 'Recycle Paper',
+      description: 'Recycle a kg of paper',
+      points: 20,
+      createdAt: DateTime.now(),
+    ),
+  ];
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    _fetchUserData();
   }
 
   Future<void> _fetchUserData() async {
-    _firestore.collection('users').doc(mockParentUserId).snapshots().listen((snapshot) {
-      if (snapshot.exists) {
-        final data = snapshot.data();
-        if (data != null) {
-          Provider.of<AppState>(context, listen: false).setEcoPoints(data['ecoPoints'] ?? 0);
-          Provider.of<AppState>(context, listen: false).setWaterSaved(data['waterSaved']?.toDouble() ?? 0.0);
-          Provider.of<AppState>(context, listen: false).setCo2Saved(data['co2Saved']?.toDouble() ?? 0.0);
-        }
+    final userId = await TinyDB.getString('current_user');
+    if (userId != null) {
+      final usersJson = await TinyDB.getJson('users') ?? {};
+      final userProfile = usersJson[userId];
+      if (userProfile != null && mounted) {
+        Provider.of<AppState>(context, listen: false).setEcoImpact(
+          userProfile['ecoPoints'] ?? 0,
+          userProfile['waterSaved'] ?? 0.0,
+          userProfile['co2Saved'] ?? 0.0,
+        );
       }
-    });
+    }
   }
 
   Future<void> _approveTask(Task task) async {
     try {
-      await _firestore.collection('tasks').doc(task.id).update({
-        'approvedByParent': true,
-      });
-
-      // Update kid's ecoPoints, waterSaved, co2Saved
-      await _firestore.collection('users').doc(task.kidID).update({
-        'ecoPoints': FieldValue.increment(task.points),
-        'waterSaved': FieldValue.increment(task.points * 0.5), // Example calculation
-        'co2Saved': FieldValue.increment(task.points * 0.3), // Example calculation
-      });
+      if (task.kidID == null) {
+        throw Exception('Child ID not found for this task.');
+      }
+      // Update task status locally
+      final tasks = await TinyDB.getJson('tasks') ?? {};
+      if (tasks[task.id] != null) {
+        tasks[task.id]['approvedByParent'] = true;
+        tasks[task.id]['approvedAt'] = DateTime.now().toIso8601String();
+        await TinyDB.setJson('tasks', tasks);
+      }
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -68,22 +89,66 @@ class _ParentDashboardState extends State<ParentDashboard> with SingleTickerProv
   }
 
   Future<void> _rejectTask(Task task) async {
-    try {
-      await _firestore.collection('tasks').doc(task.id).update({
-        'proofPhotoURL': FieldValue.delete(),
-        'completedAt': FieldValue.delete(),
-        'approvedByParent': false,
-      });
+    String rejectReason = '';
+    await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Reject Task'),
+        content: TextField(
+          decoration: const InputDecoration(labelText: 'Reason for rejection'),
+          onChanged: (value) => rejectReason = value,
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          ElevatedButton(
+            onPressed: () async {
+              if (rejectReason.isNotEmpty) {
+                try {
+                  // Update task status locally
+                  final tasks = await TinyDB.getJson('tasks') ?? {};
+                  if (tasks[task.id] != null) {
+                    tasks[task.id]['approvedByParent'] = false;
+                    tasks[task.id]['rejectionReason'] = rejectReason;
+                    await TinyDB.setJson('tasks', tasks);
+                  }
+                  Navigator.pop(ctx);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Task rejected.'),
+                      backgroundColor: Colors.orange,
+                    ),
+                  );
+                  Navigator.pop(ctx);
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Failed to reject task: $e'), backgroundColor: Colors.red),
+                  );
+                }
+              }
+            },
+            child: const Text('Reject'),
+          ),
+        ],
+      ),
+    );
+  }
 
+  Future<void> _deleteTask(Task task) async {
+    try {
+      // Delete task locally
+      final tasks = await TinyDB.getJson('tasks') ?? {};
+      tasks.remove(task.id);
+      await TinyDB.setJson('tasks', tasks);
+      
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('❌ Task rejected. Proof removed.'),
-          backgroundColor: Colors.red,
+        SnackBar(
+          content: Text('🗑️ Task "${task.title}" deleted.'),
+          backgroundColor: Colors.orange,
         ),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to reject task: $e'), backgroundColor: Colors.red),
+        SnackBar(content: Text('Failed to delete task: $e'), backgroundColor: Colors.red),
       );
     }
   }
@@ -92,7 +157,14 @@ class _ParentDashboardState extends State<ParentDashboard> with SingleTickerProv
     String title = '';
     String description = '';
     int points = 0;
-    String kidId = ''; // This needs to be selected from available kids
+    String? selectedKidId;
+    List<String> linkedChildren = [];
+
+    // Load linked children from SharedPreferences
+  final linkedChildrenJson = await TinyDB.getString('linked_children');
+    if (linkedChildrenJson != null && linkedChildrenJson.isNotEmpty) {
+      linkedChildren = linkedChildrenJson.split(',');
+    }
 
     await showDialog(
       context: context,
@@ -114,24 +186,58 @@ class _ParentDashboardState extends State<ParentDashboard> with SingleTickerProv
               keyboardType: TextInputType.number,
               onChanged: (value) => points = int.tryParse(value) ?? 0,
             ),
-            // TODO: Implement kid selection dropdown
+            if (linkedChildren.isNotEmpty)
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(labelText: 'Assign to Child'),
+                items: linkedChildren.map((String username) {
+                  return DropdownMenuItem<String>(
+                    value: username,
+                    child: Text(username),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  selectedKidId = newValue;
+                },
+                validator: (value) => value == null ? 'Please select a child' : null,
+              ),
           ],
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
           ElevatedButton(
             onPressed: () async {
-              if (title.isNotEmpty && description.isNotEmpty && points > 0 && kidId.isNotEmpty) {
-                await _firestore.collection('tasks').add({
-                  'title': title,
-                  'description': description,
-                  'points': points,
-                  'kidID': kidId,
-                  'approvedByParent': false,
-                  'proofPhotoURL': null,
-                  'completedAt': null,
-                });
-                Navigator.pop(ctx);
+              if (title.isNotEmpty && description.isNotEmpty && points > 0 && selectedKidId != null) {
+                try {
+                  final parentId = await AuthService.getCurrentUserId();
+                  if (parentId != null) {
+                    // Create task locally
+                    final tasks = await TinyDB.getJson('tasks') ?? {};
+                    final taskId = 'task_${DateTime.now().millisecondsSinceEpoch}';
+                    tasks[taskId] = {
+                      'id': taskId,
+                      'title': title,
+                      'description': description,
+                      'points': points,
+                      'kidID': selectedKidId,
+                      'parentID': parentId,
+                      'createdAt': DateTime.now().toIso8601String(),
+                      'approvedByParent': false,
+                      'isSubmitted': false,
+                    };
+                    await TinyDB.setJson('tasks', tasks);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('✅ Task "$title" added for $selectedKidId!')),
+                    );
+                    Navigator.pop(ctx);
+                  } else {
+                    throw Exception('Parent not logged in.');
+                  }
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Failed to add task: $e'), backgroundColor: Colors.red),
+                  );
+                }
               }
             },
             child: const Text('Add Task'),
@@ -146,6 +252,56 @@ class _ParentDashboardState extends State<ParentDashboard> with SingleTickerProv
     if (!await launchUrl(url)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Could not launch $url'), backgroundColor: Colors.red),
+      );
+    }
+  }
+
+  void _showSignOutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Sign Out'),
+        content: const Text('Are you sure you want to sign out?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () async {
+              await AuthService.signOut();
+              
+              // Sign out from AppState
+              if (mounted) {
+                Provider.of<AppState>(context, listen: false).resetState();
+                Navigator.pop(ctx);
+                // Navigate back to role select
+                Navigator.pushNamedAndRemoveUntil(context, '/role-select', (route) => false);
+              }
+            },
+            child: const Text('Sign Out', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _linkGmailAccount() async {
+    try {
+      await AuthService.linkWithGoogle();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Successfully linked with Google'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to link with Google: $e'),
+          backgroundColor: Colors.red,
+        ),
       );
     }
   }
@@ -173,6 +329,30 @@ class _ParentDashboardState extends State<ParentDashboard> with SingleTickerProv
             ),
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(FontAwesome.google),
+            tooltip: 'Link Gmail Account',
+            onPressed: _linkGmailAccount,
+          ),
+          IconButton(
+            icon: const Icon(Icons.people_outline),
+            tooltip: 'Link Children',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const AddChildScreen()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Sign Out',
+            onPressed: () {
+              _showSignOutDialog(context);
+            },
+          ),
+        ],
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: Colors.white,
@@ -245,8 +425,8 @@ class _ParentDashboardState extends State<ParentDashboard> with SingleTickerProv
   }
 
   Widget _buildTaskList(String parentId, bool approved) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: _firestore.collection('tasks').where('approvedByParent', isEqualTo: approved).snapshots(),
+    return FutureBuilder<List<Task>>(
+      future: _getTasksByApprovalStatus(approved),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -254,11 +434,10 @@ class _ParentDashboardState extends State<ParentDashboard> with SingleTickerProv
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         }
-        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+        final tasks = snapshot.data ?? [];
+        if (tasks.isEmpty) {
           return Center(child: Text(approved ? 'No approved tasks.' : 'No pending tasks.'));
         }
-
-        final tasks = snapshot.data!.docs.map((doc) => Task.fromFirestore(doc)).toList();
 
         return ListView.separated(
           itemCount: tasks.length,
@@ -269,11 +448,25 @@ class _ParentDashboardState extends State<ParentDashboard> with SingleTickerProv
               task: task,
               onApprove: _approveTask,
               onReject: _rejectTask,
+              onDelete: _deleteTask,
             );
           },
         );
       },
     );
+  }
+
+  Future<List<Task>> _getTasksByApprovalStatus(bool approved) async {
+    try {
+      final tasksMap = await TinyDB.getJson('tasks') ?? {};
+      final allTasks = tasksMap.values
+          .map((t) => Task.fromMap(t as Map<String, dynamic>))
+          .toList();
+      return allTasks.where((task) => task.approvedByParent == approved).toList();
+    } catch (e) {
+      print('Error fetching tasks: $e');
+      return [];
+    }
   }
 }
 
@@ -365,11 +558,13 @@ class _ParentTaskCard extends StatelessWidget {
   final Task task;
   final Function(Task) onApprove;
   final Function(Task) onReject;
+  final Function(Task) onDelete;
 
   const _ParentTaskCard({
     required this.task,
     required this.onApprove,
     required this.onReject,
+    required this.onDelete,
     Key? key,
   }) : super(key: key);
 
@@ -397,7 +592,14 @@ class _ParentTaskCard extends StatelessWidget {
                   children: [
                     Text('Proof Photo:', style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
                     const SizedBox(height: 5),
-                    Image.network(task.proofPhotoURL!, height: 100, width: 100, fit: BoxFit.cover),
+                    CachedNetworkImage(
+                      imageUrl: task.proofPhotoURL!,
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                    ),
                   ],
                 ),
               ),
@@ -405,7 +607,7 @@ class _ParentTaskCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Text(
-                  'Completed: ${task.completedAt!.toDate().toLocal().toString().split(' ')[0]}',
+                  'Completed: ${task.completedAt!.toLocal().toString().split(' ')[0]}',
                   style: GoogleFonts.poppins(fontSize: 12, color: Colors.grey[600]),
                 ),
               ),
@@ -427,6 +629,11 @@ class _ParentTaskCard extends StatelessWidget {
                       icon: const Icon(Icons.close, size: 18),
                       label: const Text('Reject'),
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
+                    ),
+                    const SizedBox(width: 10),
+                    IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.grey),
+                      onPressed: () => onDelete(task),
                     ),
                   ],
                 ),

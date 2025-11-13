@@ -1,16 +1,13 @@
-import 'dart:io';
-import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:image_picker/image_picker.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:confetti/confetti.dart';
+import 'package:hi/services/auth_service.dart';
+import 'package:hi/services/tinydb_service.dart';
 import '../Models/task.dart';
 import '../Models/app_state.dart';
-import '../services/auth_service.dart';
+import 'role_select.dart';
 
 class ChildDashboard extends StatefulWidget {
   const ChildDashboard({Key? key}) : super(key: key);
@@ -20,76 +17,67 @@ class ChildDashboard extends StatefulWidget {
 }
 
 class _ChildDashboardState extends State<ChildDashboard> {
-  final _firestore = FirebaseFirestore.instance;
-  final _storage = firebase_storage.FirebaseStorage.instance;
   late ConfettiController _confettiController;
   bool _isLoading = false;
+  
+  // Mock data for testing
+  int ecoPoints = 250;
+  int greenTime = 1240;
 
   @override
   void initState() {
     super.initState();
     _confettiController = ConfettiController(duration: const Duration(seconds: 1));
-    _fetchUserData();
   }
 
   Future<void> _fetchUserData() async {
-    // For testing, we'll use a mock user ID
-    const userId = 'testUserId';
-    _firestore.collection('users').doc(userId).snapshots().listen((snapshot) {
-      if (snapshot.exists && mounted) {
-        final data = snapshot.data();
-        if (data != null) {
-          Provider.of<AppState>(context, listen: false).setEcoPoints(data['ecoPoints'] ?? 0);
-          Provider.of<AppState>(context, listen: false).setScreenTimeMinutes(data['greenTime'] ?? 0);
-        }
+    final userId = await TinyDB.getString('current_user');
+    if (userId != null) {
+      final usersJson = await TinyDB.getJson('users') ?? {};
+      final userProfile = usersJson[userId];
+      if (userProfile != null && mounted) {
+        setState(() {
+          ecoPoints = userProfile['ecoPoints'] ?? 0;
+          greenTime = userProfile['greenTime'] ?? 0;
+        });
       }
-    });
+    }
   }
 
   Future<void> _markTaskDone(Task task) async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.camera);
+    setState(() => _isLoading = true);
+    try {
+      // Mark task as completed locally
+      final tasks = await TinyDB.getJson('tasks') ?? {};
+      if (tasks[task.id] != null) {
+        tasks[task.id]['completedAt'] = DateTime.now().toIso8601String();
+        tasks[task.id]['status'] = 'completed';
+        await TinyDB.setJson('tasks', tasks);
+      }
 
-    if (image != null) {
-      setState(() => _isLoading = true);
-      try {
-        // For testing, we'll use a mock user ID
-        const userId = 'testUserId';
-
-        final ref = _storage.ref().child('task_proofs').child(userId).child('${task.id}_${DateTime.now().toIso8601String()}.jpg');
-        await ref.putFile(File(image.path));
-        final imageUrl = await ref.getDownloadURL();
-
-        await _firestore.collection('tasks').doc(task.id).update({
-          'proofPhotoURL': imageUrl,
-          'completedAt': Timestamp.now(),
-          'approvedByParent': false,
-        });
-
-        _confettiController.play();
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('🎉 Task submitted for approval!'),
-              backgroundColor: Colors.green,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-        }
-      } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Failed to upload proof: $e'),
-              backgroundColor: Colors.red,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-        }
-      } finally {
-        if (mounted) {
-          setState(() => _isLoading = false);
-        }
+      _confettiController.play();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('🎉 Task completed!'),
+            backgroundColor: Colors.green,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to complete task: $e'),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
       }
     }
   }
@@ -100,11 +88,60 @@ class _ChildDashboardState extends State<ChildDashboard> {
     super.dispose();
   }
 
+  void _showSignOutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Sign Out'),
+        content: const Text('Are you sure you want to sign out?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () async {
+              await AuthService.signOut();
+              
+              // Sign out from AppState
+              if (mounted) {
+                Provider.of<AppState>(context, listen: false).resetState();
+                Navigator.pop(ctx);
+                // Navigate back to role select
+                Navigator.pushNamedAndRemoveUntil(context, '/role-select', (route) => false);
+              }
+            },
+            child: const Text('Sign Out', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context);
     final size = MediaQuery.of(context).size;
     final isTabletOrDesktop = size.width > 600;
+    
+    // Mock tasks for testing
+    final mockTaskList = [
+      Task(
+        id: '1',
+        title: 'Plant a Tree',
+        description: 'Plant one tree in your area',
+        points: 50,
+        createdAt: DateTime.now(),
+      ),
+      Task(
+        id: '2',
+        title: 'Recycle Paper',
+        description: 'Recycle a kg of paper',
+        points: 20,
+        createdAt: DateTime.now(),
+      ),
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -124,6 +161,15 @@ class _ChildDashboardState extends State<ChildDashboard> {
             ),
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Sign Out',
+            onPressed: () {
+              _showSignOutDialog(context);
+            },
+          ),
+        ],
       ),
       body: Stack(
         children: [
@@ -151,11 +197,8 @@ class _ChildDashboardState extends State<ChildDashboard> {
                   ),
                   const SizedBox(height: 20),
                   Expanded(
-                    child: StreamBuilder<QuerySnapshot>(
-                      stream: _firestore
-                          .collection('tasks')
-                          .where('kidID', isEqualTo: 'testUserId')
-                          .snapshots(),
+                    child: FutureBuilder<Map<String, dynamic>?>(
+                      future: _getTasks(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return const Center(child: CircularProgressIndicator());
@@ -163,7 +206,7 @@ class _ChildDashboardState extends State<ChildDashboard> {
                         if (snapshot.hasError) {
                           return Center(child: Text('Error: ${snapshot.error}'));
                         }
-                        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        if (!snapshot.hasData || snapshot.data == null) {
                           return Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -186,25 +229,41 @@ class _ChildDashboardState extends State<ChildDashboard> {
                           );
                         }
 
-                        final tasks = snapshot.data!.docs
-                            .map((doc) => Task.fromFirestore(doc))
-                            .toList();
-                        Provider.of<AppState>(context, listen: false)
-                            .setTasks(tasks);
+                        final tasks = (snapshot.data!['tasks'] as List<dynamic>? ?? []).cast<Task>();
 
-                        return ListView.separated(
-                          itemCount: tasks.length,
-                          separatorBuilder: (_, __) =>
-                              const SizedBox(height: 10),
-                          itemBuilder: (context, index) {
-                            final task = tasks[index];
-                            return _TaskCard(
-                              task: task,
-                              onMarkDone: _markTaskDone,
-                              isLoading: _isLoading,
-                            );
-                          },
-                        );
+                        return tasks.isEmpty
+                            ? Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.eco_outlined,
+                                      size: 64,
+                                      color: Colors.green,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text(
+                                      'No tasks assigned yet!',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 18,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : ListView.separated(
+                                itemCount: tasks.length,
+                                separatorBuilder: (_, __) => const SizedBox(height: 10),
+                                itemBuilder: (context, index) {
+                                  final task = tasks[index];
+                                  return _TaskCard(
+                                    task: task,
+                                    onMarkDone: _markTaskDone,
+                                    isLoading: _isLoading,
+                                  );
+                                },
+                              );
                       },
                     ),
                   ),
@@ -312,6 +371,16 @@ class _ChildDashboardState extends State<ChildDashboard> {
         ),
       ],
     );
+  }
+
+  Future<Map<String, dynamic>?> _getTasks() async {
+    try {
+      final tasks = await TinyDB.getJson('tasks') ?? {};
+      return {'tasks': (tasks.values.toList() as List<dynamic>).map((t) => Task.fromMap(t as Map<String, dynamic>)).toList()};
+    } catch (e) {
+      print('Error fetching tasks: $e');
+      return null;
+    }
   }
 }
 
@@ -440,3 +509,4 @@ class _TaskCard extends StatelessWidget {
     }
   }
 }
+

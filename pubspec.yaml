@@ -16,11 +16,6 @@ dependencies:
   flutter_screenutil: ^5.9.0
   auto_size_text: ^3.0.0
 
-  # Firebase
-  firebase_core: ^2.24.2
-  cloud_firestore: ^4.13.6
-  firebase_storage: ^11.5.6
-
   # Local Database
   hive: ^2.2.3
   hive_flutter: ^1.1.0

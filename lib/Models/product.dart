@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Product {
   final String id;
   final String name;
@@ -18,26 +16,4 @@ class Product {
   });
 
   int get finalPrice => (price * sustainabilityWeight).round();
-
-  factory Product.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot, SnapshotOptions? options) {
-    final data = snapshot.data();
-    return Product(
-      id: snapshot.id,
-      name: data?['name'],
-      description: data?['description'],
-      price: data?['price'],
-      sustainabilityWeight: data?['sustainabilityWeight'],
-      emoji: data?['emoji'],
-    );
-  }
-
-  Map<String, dynamic> toFirestore() {
-    return {
-      'name': name,
-      'description': description,
-      'price': price,
-      'sustainabilityWeight': sustainabilityWeight,
-      'emoji': emoji,
-    };
-  }
 }

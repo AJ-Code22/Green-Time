@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
-import 'shared_prefs_service.dart';
+import 'tinydb_service.dart';
 
 class ThemeProvider extends ChangeNotifier {
   bool _isDarkMode = false;
@@ -16,20 +16,20 @@ class ThemeProvider extends ChangeNotifier {
   }
 
   Future<void> _loadThemePreference() async {
-    final savedTheme = await SharedPrefsService.getString('theme_mode');
+  final savedTheme = await TinyDB.getString('theme_mode');
     _isDarkMode = savedTheme == 'dark';
     notifyListeners();
   }
 
   Future<void> toggleTheme() async {
     _isDarkMode = !_isDarkMode;
-    await SharedPrefsService.setString('theme_mode', _isDarkMode ? 'dark' : 'light');
+  await TinyDB.setString('theme_mode', _isDarkMode ? 'dark' : 'light');
     notifyListeners();
   }
 
   Future<void> setDarkMode(bool isDark) async {
     _isDarkMode = isDark;
-    await SharedPrefsService.setString('theme_mode', isDark ? 'dark' : 'light');
+  await TinyDB.setString('theme_mode', isDark ? 'dark' : 'light');
     notifyListeners();
   }
 }

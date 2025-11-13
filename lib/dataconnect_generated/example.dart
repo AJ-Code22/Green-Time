@@ -1,4 +1,4 @@
-library dataconnect_generated;
+library dataconnect_generated/generated.dart;
 import 'package:firebase_data_connect/firebase_data_connect.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
@@ -20,8 +20,8 @@ part 'delete_medication.dart';
 class ExampleConnector {
   
   
-  CreateNewSharedListVariablesBuilder createNewSharedList ({required String name, }) {
-    return CreateNewSharedListVariablesBuilder(dataConnect, name: name,);
+  CreateNewSharedListVariablesBuilder createNewSharedList ({required String name, required Timestamp createdAt, }) {
+    return CreateNewSharedListVariablesBuilder(dataConnect, name: name,createdAt: createdAt,);
   }
   
   
@@ -56,3 +56,4 @@ class ExampleConnector {
 
   FirebaseDataConnect dataConnect;
 }
+

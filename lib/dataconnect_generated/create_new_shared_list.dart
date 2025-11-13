@@ -1,4 +1,4 @@
-part of 'generated.dart';
+part of 'example.dart';
 
 class CreateNewSharedListVariablesBuilder {
   Optional<String> _childId = Optional.optional(nativeFromJson, nativeToJson);
@@ -6,6 +6,7 @@ class CreateNewSharedListVariablesBuilder {
   String name;
   Optional<String> _description = Optional.optional(nativeFromJson, nativeToJson);
   Optional<bool> _isPublic = Optional.optional(nativeFromJson, nativeToJson);
+  Timestamp createdAt;
 
   final FirebaseDataConnect _dataConnect;
   CreateNewSharedListVariablesBuilder childId(String? t) {
@@ -25,7 +26,7 @@ class CreateNewSharedListVariablesBuilder {
    return this;
   }
 
-  CreateNewSharedListVariablesBuilder(this._dataConnect, {required  this.name,});
+  CreateNewSharedListVariablesBuilder(this._dataConnect, {required  this.name,required  this.createdAt,});
   Deserializer<CreateNewSharedListData> dataDeserializer = (dynamic json)  => CreateNewSharedListData.fromJson(jsonDecode(json));
   Serializer<CreateNewSharedListVariables> varsSerializer = (CreateNewSharedListVariables vars) => jsonEncode(vars.toJson());
   Future<OperationResult<CreateNewSharedListData, CreateNewSharedListVariables>> execute() {
@@ -33,7 +34,7 @@ class CreateNewSharedListVariablesBuilder {
   }
 
   MutationRef<CreateNewSharedListData, CreateNewSharedListVariables> ref() {
-    CreateNewSharedListVariables vars= CreateNewSharedListVariables(childId: _childId,creatorId: _creatorId,name: name,description: _description,isPublic: _isPublic,);
+    CreateNewSharedListVariables vars= CreateNewSharedListVariables(childId: _childId,creatorId: _creatorId,name: name,description: _description,isPublic: _isPublic,createdAt: createdAt,);
     return _dataConnect.mutation("CreateNewSharedList", dataDeserializer, varsSerializer, vars);
   }
 }
@@ -113,10 +114,12 @@ class CreateNewSharedListVariables {
   final String name;
   late final Optional<String>description;
   late final Optional<bool>isPublic;
+  final Timestamp createdAt;
   @Deprecated('fromJson is deprecated for Variable classes as they are no longer required for deserialization.')
   CreateNewSharedListVariables.fromJson(Map<String, dynamic> json):
   
-  name = nativeFromJson<String>(json['name']) {
+  name = nativeFromJson<String>(json['name']),
+  createdAt = Timestamp.fromJson(json['createdAt']) {
   
   
     childId = Optional.optional(nativeFromJson, nativeToJson);
@@ -135,6 +138,7 @@ class CreateNewSharedListVariables {
     isPublic = Optional.optional(nativeFromJson, nativeToJson);
     isPublic.value = json['isPublic'] == null ? null : nativeFromJson<bool>(json['isPublic']);
   
+  
   }
   @override
   bool operator ==(Object other) {
@@ -150,11 +154,12 @@ class CreateNewSharedListVariables {
     creatorId == otherTyped.creatorId && 
     name == otherTyped.name && 
     description == otherTyped.description && 
-    isPublic == otherTyped.isPublic;
+    isPublic == otherTyped.isPublic && 
+    createdAt == otherTyped.createdAt;
     
   }
   @override
-  int get hashCode => Object.hashAll([childId.hashCode, creatorId.hashCode, name.hashCode, description.hashCode, isPublic.hashCode]);
+  int get hashCode => Object.hashAll([childId.hashCode, creatorId.hashCode, name.hashCode, description.hashCode, isPublic.hashCode, createdAt.hashCode]);
   
 
   Map<String, dynamic> toJson() {
@@ -172,6 +177,7 @@ class CreateNewSharedListVariables {
     if(isPublic.state == OptionalState.set) {
       json['isPublic'] = isPublic.toJson();
     }
+    json['createdAt'] = createdAt.toJson();
     return json;
   }
 
@@ -181,6 +187,7 @@ class CreateNewSharedListVariables {
     required this.name,
     required this.description,
     required this.isPublic,
+    required this.createdAt,
   });
 }
 

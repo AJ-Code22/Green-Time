@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'dart:io' show Platform;
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../Models/app_state.dart';
-import '../services/shared_prefs_service.dart';
+import '../services/tinydb_service.dart';
 import '../utils/responsive_helper.dart';
 
 class RedeemScreen extends StatefulWidget {
@@ -17,7 +17,6 @@ class RedeemScreen extends StatefulWidget {
 
 class _RedeemScreenState extends State<RedeemScreen> {
   late WebViewController _webViewController;
-  final _firestore = FirebaseFirestore.instance;
   bool _isLoading = true;
   bool _showWebView = false;
   String? _userRole;
@@ -30,7 +29,7 @@ class _RedeemScreenState extends State<RedeemScreen> {
   }
 
   Future<void> _checkUserRole() async {
-    final role = await SharedPrefsService.getUserRole();
+  final role = await TinyDB.getString('current_role');
     setState(() {
       _userRole = role;
     });
@@ -391,3 +390,4 @@ class _RedeemScreenState extends State<RedeemScreen> {
       ],
     );
   }
+}
